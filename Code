@@ -1,0 +1,148 @@
+
+import cv2
+import numpy as np
+import imutils
+import os 
+ 
+# feature matching + text on screen  
+
+#give the path of video 
+cap = cv2.VideoCapture('C:\\Users\\hp\\electric meter 3.mp4')
+
+#give the path of template images
+img1 = cv2.imread("C:\\Users\\hp\\Template\\temp\\A-p(1).png", cv2.IMREAD_GRAYSCALE) # query image1
+img2 = cv2.imread("C:\\Users\\hp\\Template\\temp\\kwh temp 3.png", cv2.IMREAD_GRAYSCALE) # query image2
+img5 = cv2.imread("C:\\Users\\hp\\Template\\temp\\kw better.png", cv2.IMREAD_GRAYSCALE) # query image3
+img7 = cv2.imread('C:\\Users\\hp\\Template\\V temp.png',0)
+
+count = 0 
+
+# Resizing the template images if required 
+
+#w,h = template.shape[::-1]
+#for scale in np.linspace(.2, 1.0, 20)[::-1]:
+#resized1 = imutils.resize(template, width = int(template.shape[1] * .35))
+#r = template.shape[1] / float(resized1.shape[1])
+# img1 = imutils.resize(img1, height=50)
+# img2 = imutils.resize(img2, height=50)
+# img5 = imutils.resize(img5, height=50)
+
+# Feature detection 
+sift = cv2.xfeatures2d.SIFT_create()
+kp_image1, desc_image1 = sift.detectAndCompute(img1, None)
+kp_image2, desc_image2 = sift.detectAndCompute(img2, None)
+kp_image5, desc_image5 = sift.detectAndCompute(img5, None)
+kp_image7, desc_image7 = sift.detectAndCompute(img7, None)
+
+# Feature matching :depending upon system use or the next 3 commented out lines
+#index_params = dict(algorithm=0, trees=5)
+#search_params = dict()
+#flann = cv2.FlannBasedMatcher(index_params, search_params)
+bf = cv2.BFMatcher()
+ 
+while True:
+    ret, frame = cap.read()
+
+    (h, w) = frame.shape[:2]
+    center = (w / 2, h / 2)
+ 
+# rotate the image by 270 degrees
+    M = cv2.getRotationMatrix2D(center, 270, 1.0)
+    rotated = cv2.warpAffine(frame, M, (w, h))
+    blurred_frame = cv2.GaussianBlur(rotated, (5, 5), 0)
+    hsv = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2HSV)
+ 
+    lower_green = np.array([35, 100, 20])
+    upper_green = np.array([85, 255, 255])
+    mask = cv2.inRange(hsv, lower_green, upper_green)
+ 
+    _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    #find the biggest area
+    c = max(contours, key = cv2.contourArea)
+
+    x,y,w,h = cv2.boundingRect(c)
+    
+    # draw the reading area contour (in blue)
+    im=cv2.rectangle(rotated,(x,y),(x+w,y+h),(255,0,0),2)
+    roi=im[y:y+h,x:x+w]
+    # resized = imutils.resize(roi, height=450)
+    grayframe = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY) #trainimage
+    
+    kp_grayframe, desc_grayframe = sift.detectAndCompute(grayframe, None)
+
+    #if flann matcher is used : then flann.knnMatch() instead of bf.knnMatch
+    matches1 = bf.knnMatch(desc_image1, desc_grayframe, k=2)
+    matches2 = bf.knnMatch(desc_image2, desc_grayframe, k=2)
+    matches5 = bf.knnMatch(desc_image5, desc_grayframe, k=2)
+    matches7 = bf.knnMatch(desc_image7, desc_grayframe, k=2)
+    
+    good_points1 = []
+    for m, n in matches1:
+        if m.distance < 0.8*n.distance: # 0.8 is the ideal value ..adjust according to need 
+            good_points1.append(m)
+            
+    good_points2 = []
+    for p, n in matches2:
+        if p.distance < 0.8*n.distance:
+            good_points2.append(p) 
+            
+    good_points5 = []
+    for q, n in matches5:
+        if q.distance < 0.8*n.distance:
+            good_points5.append(q)
+            
+    good_points7 = []
+    for r, n in matches7:
+        if r.distance < 0.8*n.distance:
+            good_points7.append(r)        
+            
+    img3 = cv2.drawMatches(img1, kp_image1, grayframe, kp_grayframe, good_points1, grayframe)
+    img4 = cv2.drawMatches(img2, kp_image2, grayframe, kp_grayframe, good_points2, grayframe)
+    img6 = cv2.drawMatches(img5, kp_image5, grayframe, kp_grayframe, good_points5, grayframe)
+    img8 = cv2.drawMatches(img7, kp_image7, grayframe, kp_grayframe, good_points7, grayframe)
+    
+    height, width =img3.shape[:2]
+    for m,n in matches1:
+        if len(good_points1)>2: #adjust value of 2 according to video quality 
+            font=cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(grayframe,'A',(150,100),font,2,(255,255,255),3, cv2.LINE_AA)
+    
+    height, width =img4.shape[:2]
+    for p,n in matches2:
+        if len(good_points2)>20:
+        	#adjust the value of 20 according to the video quality .. lower the value if video quality is poor
+            font=cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(grayframe,'KWH',(150,100),font,2,(255,255,255),3, cv2.LINE_AA)
+            
+            # storing the frame of kWh as an image in .jpg format 
+            count += 1
+            if count == 1 :
+                cv2.imwrite(os.path.join('C:\\Users\\hp\\Template','kWh%d.png') % count,img4)
+            
+            
+    height, width =img6.shape[:2]
+    for q,n in matches5:
+        if len(good_points5)>12: #adjust value of 12 according to video 
+            font=cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(grayframe,'KW',(150,100),font,2,(255,255,255),3, cv2.LINE_AA)
+            
+    height, width =img8.shape[:2]
+    for r,n in matches7:
+        if len(good_points7)>4: #adjust value of 4 according to video quality
+            font=cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(grayframe,'V',(150,100),font,2,(255,255,255),3, cv2.LINE_AA)
+    
+    #cv2.imshow("Frame", rotated)
+    #cv2.imshow("A", img3)
+    #cv2.imshow("KWH", img4)
+    #cv2.imshow("KW", img6)
+    #cv2.imshow("V", img8)
+    cv2.imshow("result",grayframe)
+ 
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+ 
+cap.release()
+cv2.destroyAllWindows()
