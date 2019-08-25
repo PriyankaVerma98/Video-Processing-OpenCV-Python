@@ -1,10 +1,10 @@
 # Video-Processing-OpenCV-Python
-Real time processing of digital electricity meter videos to detect four units i.e. Volt, Ampere, Kilowatt, Kilowatt-Hour using OpenCV and Python.
+Real time processing of digital electricity meter videos to detect four units- Volt, Ampere, Kilowatt, Kilowatt-Hour using OpenCV and Python.
 
-For feature extraction SIFT, ORB algorithms were tried. Brute force and Flann based techniques were tried for feature matching. Then ratio test was used to extract good points. 
+Various algorithms like SIFT and ORB were tried for feature extraction. Brute force and Flann based techniques were tried for feature matching. Then ratio test was used to extract good points. 
 
 ### Feature Extraction and Matching 
-Following images show the result of ORB and Flann algorithms
+Following images show the result of ORB with Flann technique.
 
 ![Volt](https://user-images.githubusercontent.com/39693183/63647974-5d644000-c746-11e9-8c9b-466bd1e038f8.png)
 
