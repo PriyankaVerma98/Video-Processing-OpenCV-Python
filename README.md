@@ -25,9 +25,6 @@ Following images show the result of ORB with Flann technique.
 ![Screen Shot 2019-08-24 at 11 36 05 PM](https://user-images.githubusercontent.com/39693183/63641233-80e8a580-c6c8-11e9-92e4-3580cedd3f7b.png)
 
 
-![Screen Shot 2019-08-24 at 11 37 01 PM 1](https://user-images.githubusercontent.com/39693183/63641234-81813c00-c6c8-11e9-990e-8c545bb14029.png)
-
-
 ### Scope
 
 Earlier process to take the meter readings and generate bills involved a company official to make home visit, note down the reading then a bill is generated at the office and couriered to the home.
