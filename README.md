@@ -3,9 +3,19 @@ Real time processing of digital electricity meter videos to detect four units i.
 
 For feature extraction SIFT, ORB algorithms were tried. Brute force and Flann based techniques were tried for feature matching. Then ratio test was used to extract good points. 
 
-### Feature Matching 
+### Feature Extraction and Matching 
+Following images show the result of ORB and Flann algorithms
+
+![Volt](https://user-images.githubusercontent.com/39693183/63647974-5d644000-c746-11e9-8c9b-466bd1e038f8.png)
 
 
+![KiloWatt hour](https://user-images.githubusercontent.com/39693183/63647975-5fc69a00-c746-11e9-921e-93ff605a3cd2.png)
+
+
+![Amperes](https://user-images.githubusercontent.com/39693183/63647976-62c18a80-c746-11e9-82bc-79d141bc6a5d.png)
+
+
+![KiloWatt](https://user-images.githubusercontent.com/39693183/63647979-69500200-c746-11e9-9bc9-c375c56985b0.png)
 
 ### Results
 
@@ -20,4 +30,8 @@ For feature extraction SIFT, ORB algorithms were tried. Brute force and Flann ba
 
 ### Scope
 
-This can help to digitalize electricity billing procedure.  
+Earlier process to take the meter readings and generate bills involved a company official to make home visit, note down the reading then a bill is generated at the office and couriered to the home.
+
+This project can help to digitalize electricity billing procedure. It will  save time and prevent human intervention and errors. 
+
+
