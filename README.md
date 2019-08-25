@@ -1,7 +1,7 @@
 # Video-Processing-OpenCV-Python
-Processing videos of digital electricity meter to extract readings using OpenCV and Python
+Real time processing of digital electricity meter videos to detect four units i.e. Volt, Ampere, Kilowatt, Kilowatt-Hour using OpenCV and Python.
 
-Four units i.e. Volt, ampere, kilowatt, kilowatt hour are detected and read in real time using feature matching for different types of meters with different fonts. 
+For feature extraction SIFT, ORB algorithms were tried. Brute force and Flann based techniques were tried for feature matching. Then ratio test was used to extract good points. 
 
 
 ### Results
@@ -9,6 +9,8 @@ Four units i.e. Volt, ampere, kilowatt, kilowatt hour are detected and read in r
 
 
 ![Screen Shot 2019-08-24 at 11 37 01 PM 1](https://user-images.githubusercontent.com/39693183/63641234-81813c00-c6c8-11e9-990e-8c545bb14029.png)
+
+[Link to the video with result](https://drive.google.com/open?id=1FaaPnWijvFikdoWgZjdGRic1jOd0Oh58)
 
 ### Challenges
 Different resolutions of video will have different resolutions, which is still a problem to be dealt with.
