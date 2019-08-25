@@ -1,0 +1,143 @@
+import cv2
+import numpy as np
+import imutils
+# import glob
+import os
+
+# changes in <<video1>> code by jatin in <<ORB>>> ...!!!! 
+
+cap = cv2.VideoCapture("1phmetervideo.mp4")
+img1 = cv2.imread("4A2.png", cv2.IMREAD_GRAYSCALE)  # query image1
+img2 = cv2.imread("1kwhtemp2.png", cv2.IMREAD_GRAYSCALE)  # query image2
+img5 = cv2.imread("2kwtemp2.png", cv2.IMREAD_GRAYSCALE)  # query image3
+template = cv2.imread("3vtemp2.png", 0)
+
+count = 0
+
+w, h = template.shape[::-1]
+print(w,h)
+# for scale in np.linspace(.2, 1.0, 20)[::-1]:
+resized1 = imutils.resize(template, width=int(template.shape[1] * .35))
+r = template.shape[1] / float(resized1.shape[1])
+
+img1 = imutils.resize(img1, height=50)
+img2 = imutils.resize(img2, height=50)
+img5 = imutils.resize(img5, height=50)
+
+# Features
+# sift = cv2.xfeatures2d.SIFT_create()
+# kp_image1, desc_image1 = sift.detectAndCompute(img1, None)
+# kp_image2, desc_image2 = sift.detectAndCompute(img2, None)
+# kp_image5, desc_image5 = sift.detectAndCompute(img5, None)
+
+orb = cv2.ORB_create()   
+kp_image1 = orb.detect(img1,None)
+kp_image2 = orb.detect(img2,None)
+kp_image5 = orb.detect(img5,None)
+kp_image1,desc_image1 = orb.compute(img1,kp_image1)
+kp_image2,desc_image2 = orb.compute(img2,kp_image2)
+kp_image5,desc_image5 = orb.compute(img5,kp_image5)
+
+# Feature matching : use bf by commenting out next 3 lines...depending upon system
+index_params = dict(algorithm=0, trees=5)
+search_params = dict()
+flann = cv2.FlannBasedMatcher(index_params, search_params)
+# bf = cv2.BFMatcher()
+
+while True:
+    ret, frame = cap.read()
+    blurred_frame = cv2.GaussianBlur(frame, (5, 5), 0)
+    hsv = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2HSV)
+
+    lower_green = np.array([50, 155, 155])
+    upper_green = np.array([70, 255, 255])
+    mask = cv2.inRange(hsv, lower_green, upper_green)
+
+    _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    # find the biggest area
+    c = max(contours, key=cv2.contourArea)
+
+    x, y, w, h = cv2.boundingRect(c)
+
+    # draw the reading area contour (in blue)
+    im = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+    roi = im[y:y + h, x:x + w]
+    resized = imutils.resize(roi, height=300)
+
+    grayframe = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)  # trainimage
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # template matching
+    res = cv2.matchTemplate(gray, resized1, cv2.TM_CCOEFF_NORMED)
+    threshold = 0.9
+
+    loc = np.where(res >= threshold)
+    # if loc.any() is True :
+
+    for pt in zip(*loc[::-1]):
+        cv2.rectangle(frame, pt, (pt[0] + int(w * 0.35), pt[1] + int(h * 0.35)), (0, 255, 255), 1)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(frame, 'V', (381, 90), font, 2, (0, 0, 0), 5, cv2.LINE_AA)
+
+    kp_grayframe, desc_grayframe = orb.detectAndCompute(grayframe, None)
+    # grayframe = cv2.drawKeypoints(grayframe, kp_grayframe, grayframe)
+    matches1 = flann.knnMatch(desc_image1, desc_grayframe, k=2)
+    matches2 = flann.knnMatch(desc_image2, desc_grayframe, k=2)
+    matches5 = flann.knnMatch(desc_image5, desc_grayframe, k=2)
+
+    good_points1 = []
+    for m, n in matches1:
+        if m.distance < 0.3 * n.distance:
+            good_points1.append(m)
+
+    good_points2 = []
+    for p, n in matches2:
+        if p.distance < 0.3 * n.distance:
+            good_points2.append(p)
+
+    good_points5 = []
+    for q, n in matches5:
+        if q.distance < 0.3 * n.distance:
+            good_points5.append(q)
+
+    img3 = cv2.drawMatches(img1, kp_image1, grayframe, kp_grayframe, good_points1, grayframe)
+    img4 = cv2.drawMatches(img2, kp_image2, grayframe, kp_grayframe, good_points2, grayframe)
+    img6 = cv2.drawMatches(img5, kp_image5, grayframe, kp_grayframe, good_points5, grayframe)
+    print good_points1
+    print good_points2
+    print good_points5
+    # width, height=cv2.GetSize(img3)
+    height, width = img3.shape[:2]
+    for m, n in matches1:
+        if len(good_points1) > 7:
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(img3, 'A', (750, 50), font, 2, (0, 0, 0), 5, cv2.LINE_AA)
+
+    height, width = img4.shape[:2]
+    for p, n in matches2:
+        if len(good_points2) > 6:
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(img4, 'KWH', (750, 50), font, 2, (0, 0, 0), 5, cv2.LINE_AA)
+            # storing the image of kWh
+            count += 1
+            if count == 1:
+                cv2.imwrite(os.path.join('/Users/PV/FOLDERS/PS/extracted2', 'kWh%d.png') % count, img4)
+
+    height, width = img6.shape[:2]
+    for q, n in matches5:
+        if len(good_points5) > 5:
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(img6, 'KW', (750, 50), font, 2, (0, 0, 0), 5, cv2.LINE_AA)
+
+    cv2.imshow("Frame", frame)
+    cv2.imshow("A", img3)
+    cv2.imshow("KWH", img4)
+    cv2.imshow("KW", img6)
+
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
