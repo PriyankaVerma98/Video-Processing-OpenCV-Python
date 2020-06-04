@@ -1,0 +1,38 @@
+import cv2
+import numpy as np
+
+
+voltage_temp = cv2.imread('C:/Users/Win10/Documents/4th Semester Summer/GUVNL/v_bin.png')
+ampere_temp = cv2.imread('C:/Users/Win10/Documents/4th Semester Summer/GUVNL/a_bin.png')
+kW_temp = cv2.imread('C:/Users/Win10/Documents/4th Semester Summer/GUVNL/kW_bin.png')
+kWh_temp = cv2.imread('C:/Users/Win10/Documents/4th Semester Summer/GUVNL/kWh_bin.png')
+voltage_temp = cv2.cvtColor(voltage_temp,cv2.COLOR_BGR2GRAY)
+ampere_temp = cv2.cvtColor(ampere_temp,cv2.COLOR_BGR2GRAY)
+kW_temp = cv2.cvtColor(kW_temp,cv2.COLOR_BGR2GRAY)
+kWh_temp = cv2.cvtColor(kWh_temp,cv2.COLOR_BGR2GRAY)
+
+V_max = np.max(cv2.matchTemplate(screen1_gray,voltage_temp,cv2.TM_CCOEFF_NORMED))
+A_max = np.max(cv2.matchTemplate(screen1_gray,ampere_temp,cv2.TM_CCOEFF_NORMED))
+kW_max = np.max(cv2.matchTemplate(screen1_gray,kW_temp,cv2.TM_CCOEFF_NORMED))
+kWh_max = np.max(cv2.matchTemplate(screen1_gray,kWh_temp,cv2.TM_CCOEFF_NORMED))
+print"V = ", V_max
+print"A = ", A_max
+print "kW =", kW_max
+print "kWh=", kWh_max
+
+threshold = 0.9
+maxval = 0
+if(V_max>maxval):
+    symbol = "V"
+    maxval = V_max
+if(A_max>maxval):
+    symbol = "A"
+    maxval = A_max
+if(kW_max>maxval):
+    symbol = "kW"
+    maxval = kW_max
+if(kWh_max>maxval):
+    symbol = "kWh"
+    maxval = kWh_max
+if(maxval<threshold):
+    symbol = ""

@@ -1,0 +1,7 @@
+import cv2
+
+
+
+
+
+amount_of_frames = cap.get(cv2.CV_CAP_PROP_FRAME_COUNT)
