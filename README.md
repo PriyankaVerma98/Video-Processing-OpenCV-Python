@@ -1,7 +1,23 @@
-# Video-Processing-OpenCV-Python
-Real time processing of digital electricity meter videos to detect four units- Volt, Ampere, Kilowatt, Kilowatt-Hour using OpenCV and Python.
+## Introduction
 
-Various algorithms like SIFT and ORB were tried for feature extraction. Brute force and Flann based techniques were tried for feature matching. Then ratio test was used to extract good points. 
+**Objective:**
+
+This project was developed as part of a smart electricity billing application to reduce bill generation time through automation. It will  save time and prevent human intervention and errors. 
+
+Four units namely- Volt, Ampere, Kilowatt, Kilowatt-Hour, were extracted in real time from digital electricity meter videos using OpenCV and Python.
+
+**Methodology:** 
+
+- First videos were pre-processed to extract the digital display area using color filtering and contour detection. 
+
+- After extracting screen, template matching was tried to extract key metrics. 
+
+- The results were improvised by using feature matching. 
+ -- Various algorithms like SIFT and ORB were tried for feature extraction. 
+ -- Brute force and Flann based techniques were tried for feature matching. 
+ -- Then ratio test was used to extract good points. 
+ 
+- Identified units were displayed on screen 
 
 ***** 
 
@@ -36,8 +52,6 @@ Following images show the result of ORB with Flann technique.
 ## Scope
 
 Earlier process to take the meter readings and generate bills involved a company official to make home visit, note down the reading then a bill is generated at the office and couriered to the home.
-
-This project can help to digitalize electricity billing procedure. It will  save time and prevent human intervention and errors. 
 
 ****
 
