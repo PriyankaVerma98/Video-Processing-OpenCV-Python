@@ -56,3 +56,5 @@ Earlier process to take the meter readings and generate bills involved a company
 ****
 
 The project had been developed as a partial fulfillment of the *Practice School 1* course at BITS Pilani. The project has been developed under the guidance of [BISAG, Gandhinagar](https://bisag.gujarat.gov.in) and [GPRD](https://www.gprd.in)
+
+Reference : [Research Paper](https://github.com/PriyankaVerma98/Video-Processing-OpenCV-Python/blob/master/ResearchPaper.pdf)
