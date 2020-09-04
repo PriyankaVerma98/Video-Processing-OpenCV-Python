@@ -13,9 +13,9 @@ Four units namely- Volt, Ampere, Kilowatt, Kilowatt-Hour, were extracted in real
 - After extracting screen, template matching was tried to extract key metrics. 
 
 - The results were improvised by using feature matching. 
- - Various algorithms like SIFT and ORB were tried for feature extraction. 
- - Brute force and Flann based techniques were tried for feature matching. 
- - Then ratio test was used to extract good points. 
+    - Various algorithms like SIFT and ORB were tried for feature extraction. 
+    - Brute force and Flann based techniques were tried for feature matching. 
+    - Then ratio test was used to extract good points. 
  
 - Identified units were displayed on screen 
 
