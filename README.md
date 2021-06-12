@@ -57,4 +57,4 @@ Earlier process to take the meter readings and generate bills involved a company
 
 The project had been developed as a partial fulfillment of the *Practice School 1* course at BITS Pilani. The project has been developed under the guidance of [BISAG, Gandhinagar](https://bisag.gujarat.gov.in) and [GPRD](https://www.gprd.in)
 
-Reference [1] : Elrefaei, L. A., Bajaber, A., Natheir, S., AbuSanab, N., & Bazi, M. (2015, November). Automatic electricity meter reading based on image processing. In 2015 IEEE Jordan Conference on Applied Electrical Engineering and Computing Technologies (AEECT) (pp. 1-5). IEEE. [Research Paper](https://github.com/PriyankaVerma98/Video-Processing-OpenCV-Python/blob/master/ResearchPaper.pdf)
+Reference [1] : Elrefaei, L. A., Bajaber, A., Natheir, S., AbuSanab, N., & Bazi, M. (2015, November). Automatic electricity meter reading based on image processing. In 2015 IEEE Jordan Conference on Applied Electrical Engineering and Computing Technologies (AEECT) (pp. 1-5). IEEE. [Link](https://github.com/PriyankaVerma98/Video-Processing-OpenCV-Python/blob/master/ResearchPaper.pdf)
