@@ -2,7 +2,7 @@
 
 **Objective:**
 
-This project was developed as part of a smart electricity billing application to reduce bill generation time through automation. It will  save time and prevent human intervention and errors. 
+This project was developed as part of a smart electricity billing application based on research work by Elrefaei et al., [1]. It has the potential to save time, prevent human errors during electricity bill generation. 
 
 Four units namely- Volt, Ampere, Kilowatt, Kilowatt-Hour, were extracted in real time from digital electricity meter videos using OpenCV and Python.
 
@@ -57,4 +57,4 @@ Earlier process to take the meter readings and generate bills involved a company
 
 The project had been developed as a partial fulfillment of the *Practice School 1* course at BITS Pilani. The project has been developed under the guidance of [BISAG, Gandhinagar](https://bisag.gujarat.gov.in) and [GPRD](https://www.gprd.in)
 
-Reference : [Research Paper](https://github.com/PriyankaVerma98/Video-Processing-OpenCV-Python/blob/master/ResearchPaper.pdf)
+Reference [1] : Elrefaei, L. A., Bajaber, A., Natheir, S., AbuSanab, N., & Bazi, M. (2015, November). Automatic electricity meter reading based on image processing. In 2015 IEEE Jordan Conference on Applied Electrical Engineering and Computing Technologies (AEECT) (pp. 1-5). IEEE. [Research Paper](https://github.com/PriyankaVerma98/Video-Processing-OpenCV-Python/blob/master/ResearchPaper.pdf)
