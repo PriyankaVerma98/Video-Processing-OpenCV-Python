@@ -6,7 +6,7 @@ This project was developed as part of a smart electricity billing application ba
 
 Four units namely- Volt, Ampere, Kilowatt, Kilowatt-Hour, were extracted in real time from digital electricity meter videos using OpenCV and Python.
 
-**Methodology:** 
+**Method:** 
 
 - First videos were pre-processed to extract the digital display area using color filtering and contour detection. 
 
@@ -55,6 +55,6 @@ Earlier process to take the meter readings and generate bills involved a company
 
 ****
 
-The project had been developed as a partial fulfillment of the *Practice School 1* course at BITS Pilani. The project has been developed under the guidance of [BISAG, Gandhinagar](https://bisag.gujarat.gov.in) and [GPRD](https://www.gprd.in)
+The project had been developed as a partial fulfillment of the *Practice School 1* course at BITS Pilani. The project has been developed under the guidance of Senior Scientist at [BISAG, Gandhinagar](https://bisag.gujarat.gov.in). The software was accepted by [Gujarat Power R&D Department](https://www.gprd.in) for further development. I received the **Innovation Challenge Award** and cash prize by **Dept. of Science and Technology, Govt. of Gujarat** for high impact results. 
 
 Reference [1] : Elrefaei, L. A., Bajaber, A., Natheir, S., AbuSanab, N., & Bazi, M. (2015, November). Automatic electricity meter reading based on image processing. In 2015 IEEE Jordan Conference on Applied Electrical Engineering and Computing Technologies (AEECT) (pp. 1-5). IEEE. [Link](https://github.com/PriyankaVerma98/Video-Processing-OpenCV-Python/blob/master/ResearchPaper.pdf)
