@@ -4,7 +4,7 @@
 
 This project was developed as part of a smart electricity billing application based on research work by Elrefaei et al., [1]. It has the potential to save time, prevent human errors during electricity bill generation. 
 
-Four units namely- Volt, Ampere, Kilowatt, Kilowatt-Hour, were extracted in real time from digital electricity meter videos using OpenCV and Python.
+Four units namely- Volt, Ampere, Kilowatt, Kilowatt-Hour, were extracted in real time from digital electricity meter videos using OpenCV and Python. Please see the report in this repository for a detailed documentation.
 
 **Method:** 
 
